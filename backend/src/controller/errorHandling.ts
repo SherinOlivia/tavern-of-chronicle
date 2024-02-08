@@ -1,8 +1,13 @@
-export const errorHandling = function (data: any, error: Error) {
-    if (error) {
+export const errorHandling = function (data: any, error: string | Error) {
+    if (error instanceof Error) {
         return {
-            sucess:false,
+            success: false,
             error: error
+        }
+    } else if (typeof error === 'string') {
+        return {
+            success: false,
+            error: new Error(error)
         }
     } else {
         return {
