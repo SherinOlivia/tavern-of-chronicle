@@ -3,13 +3,13 @@ export interface CustomError extends Error {
 }
 
 export interface CustomRequest extends Request {
-    role: 'game_master' | 'player' | null;
+    role: 'game_master' | 'player';
     user: User;
     db: Pool;
     cookies: Cookies;
 }
 
 export interface CustomResponse extends Response {
-    json(errorResponse: { sucess: boolean; error: Error; success?: undefined; data?: undefined; } | { success: boolean; data: any; sucess?: undefined; error?: undefined; }): unknown;
+    json(body?: any): CustomResponse;
     status(code: number): CustomResponse;
 }
