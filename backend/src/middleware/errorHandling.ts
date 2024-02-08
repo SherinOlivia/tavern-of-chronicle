@@ -3,9 +3,19 @@ import { errorHandling } from "../controller/errorHandling";
 import { CustomError, CustomResponse } from "../types/custom";
 
 const errorHandlingMiddleware = (err: CustomError, req: Request, res: CustomResponse, next: NextFunction) => {
-    const errorResponse = errorHandling(null,err);
+    const errorResponse = errorHandling(null, err);
 
-    res.status(err.status || 500).json(errorResponse);
+    if (errorResponse.error) {
+        res.status(err.status || 500).json({
+            success: false,
+            error: errorResponse.error.message
+        });
+    } else {
+        res.status(200).json({
+            success: true,
+            data: errorResponse.data
+        });
+    }
 
 };
 
