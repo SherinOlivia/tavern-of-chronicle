@@ -3,7 +3,10 @@ export interface CustomError extends Error {
 }
 
 export interface CustomRequest extends Request {
+    role: 'game_master' | 'player' | null;
+    user: User;
     db: Pool;
+    cookies: Cookies;
 }
 
 export interface CustomResponse extends Response {
