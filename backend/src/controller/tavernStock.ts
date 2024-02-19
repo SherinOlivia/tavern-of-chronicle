@@ -21,3 +21,33 @@ const createStockItem = async (req: Request, res: Response) => {
         res.status(500).json(errorHandling(null, "Internal Server Error.. Stock Creation Request Failed."))
     }
 }
+
+const addStockQty = async (req: Request, res: Response) => {
+    const { itemId, increaseAmount } = req.body;
+
+    try {
+        const currentQtyResult: QueryResult = await pool.query(
+            'SELECT qty FROM stocks WHERE id = $1',
+            [itemId]
+        );
+        
+        if (currentQtyResult.rows.length === 0) {
+            return res.status(404).json(errorHandling(null, 'Stock item not found'));
+        }
+
+        const currentQty = currentQtyResult.rows[0].qty;
+        const newQty = currentQty + increaseAmount;
+
+        const result: QueryResult = await pool.query(
+            'UPDATE stocks SET qty = $1 WHERE id = $2 RETURNING *',
+            [newQty, itemId]
+        );
+
+        return res.status(200).json(errorHandling(result.rows[0], null));
+    } catch (error) {
+        console.error('Error increasing stock quantity:', error);
+        return res.status(500).json(errorHandling(null, 'Failed to increase stock quantity'));
+    }
+};
+
+export { createStockItem, addStockQty };
