@@ -1,5 +1,4 @@
-import { Pool, QueryResult } from 'pg';
-import bcrypt from 'bcrypt';
+import { QueryResult } from 'pg';
 import { Request, Response } from 'express';
 import { errorHandling } from './errorHandling';
 import pool from '../config/database';
@@ -8,6 +7,10 @@ const createStockItem = async (req: Request, res: Response) => {
     const { category, name, price, qty } = req.body
     const categoryEnums = ["food", "beverage", "misc"]
     try {  
+        const itemCheck = await pool.query("SELECT * FROM stocks WHERE name = $1",[name])
+        if(itemCheck) {
+            res.status(400).json(errorHandling(null, "Item already exist..."))
+        }
         if ( !categoryEnums.includes(category) ) {
             res.status(404).json(errorHandling(null, "Invalid Category. Please assign from available category..:" + categoryEnums.join(",") ))
         } else {
