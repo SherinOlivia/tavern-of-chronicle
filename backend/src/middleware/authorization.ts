@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { CustomRequest, CustomResponse } from '../types/custom';
+import { CustomResponse } from '../types/types';
 import { errorHandling } from '../controller/errorHandling';
 
-const authorizationMiddleware = (roles: string[]) => (req: CustomRequest, res: CustomResponse, next: NextFunction) => {
-    if (!roles.includes(req.role)) {
+const authorizationMiddleware = (roles: string[]) => (req: Request, res: CustomResponse, next: NextFunction) => {
+    if (req.role && !roles.includes(req.role)) {
         return res.status(401).json(errorHandling(null, "Unauthorized Access~"));
     } 
     

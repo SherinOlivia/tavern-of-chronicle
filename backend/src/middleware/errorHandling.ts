@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { errorHandling } from "../controller/errorHandling";
-import { CustomError, CustomResponse } from "../types/custom";
+import { CustomError, CustomResponse } from "../types/types";
 
 const errorHandlingMiddleware = (err: CustomError, req: Request, res: CustomResponse, next: NextFunction) => {
     const errorResponse = errorHandling(null, err);
 
-    if (errorResponse.error) {
+    if ( errorResponse && errorResponse.error) {
         res.status(err.status || 500).json({
             success: false,
             error: errorResponse.error.message
@@ -13,7 +13,7 @@ const errorHandlingMiddleware = (err: CustomError, req: Request, res: CustomResp
     } else {
         res.status(200).json({
             success: true,
-            data: errorResponse.data
+            data: errorResponse ? errorResponse.data : null
         });
     }
 
