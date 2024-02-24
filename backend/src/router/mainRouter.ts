@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import authenMiddleware from '../middleware/authenticationMiddleware';
-import { authRouter } from '../router';
+import { authRouter, gameMasterRouter } from '../router';
 
 const router = express.Router();
 
@@ -12,6 +12,7 @@ router.get("/", function (req: Request, res: Response) {
 })
 
 router.use('/api/v1/auth', authRouter)
+router.use('/api/v1/gamemaster', authenMiddleware, gameMasterRouter)
 // router.use('/api/v1/user', authenMiddleware, userRouter)
 
 
