@@ -1,7 +1,7 @@
 import { Application } from "express";
-import cookieMiddleware from "./cookies";
-import expressMiddleware from "./express";
-import { databaseMiddleware } from "./database";
+import cookieMiddleware from "./cookiesMiddleware";
+import expressMiddleware from "./expressMiddleware";
+import { databaseMiddleware } from "./databaseMiddleware";
 
 
 const appMiddleware = (app: Application) => {
