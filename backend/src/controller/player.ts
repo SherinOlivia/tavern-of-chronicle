@@ -6,20 +6,18 @@ import pool from "../config/database";
 const createPlayerAccount = async (req: Request, res: Response) => {
     try {
         const { name, tavernName, gender, birthday } = req.body;
-        const userId = req.user?.id; // Assuming user ID is available in req.user
+        const userId = req.user?.id;
 
-        // Check if the user already has a player account
-        const playerResult: QueryResult = await pool.query(
+        const checkPlayerAccount: QueryResult = await pool.query(
             "SELECT * FROM players WHERE user_id = $1",
             [userId]
         );
 
-        if (playerResult.rows.length > 0) {
+        if (checkPlayerAccount.rows.length > 0) {
             return res.status(400).json(errorHandling(null, "Player account already exists"));
         }
 
-        // If no player account exists, create a new one
-        const insertResult: QueryResult = await pool.query(
+        const createPlayerAccount: QueryResult = await pool.query(
             `
             INSERT INTO players (user_id, name, tavern_name, gender, birthday)
             VALUES ($1, $2, $3, $4, $5)
@@ -31,7 +29,7 @@ const createPlayerAccount = async (req: Request, res: Response) => {
         return res.status(200).json({
             success: true,
             message: "Player account created successfully",
-            data: insertResult.rows[0] // Return the newly created player account data
+            data: createPlayerAccount.rows[0] 
         });
     } catch (error) {
         console.error('Error creating player account:', error);
