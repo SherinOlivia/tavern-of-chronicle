@@ -40,7 +40,7 @@ const registerUser = async (req: Request, res: Response) => {
 };
 
 const failedLoginAttemptsCache = new NodeCache({ stdTTL: 600 });
-const loginUser = async (req: Request, res: Response) => {
+const logInUser = async (req: Request, res: Response) => {
     try {
         const { usernameOrEmail, password } = req.body;
         let userData = null;
@@ -111,11 +111,11 @@ const loginUser = async (req: Request, res: Response) => {
     }
 };
 
-const logoutUser = async (req: Request, res: Response) => {
+const logOutUser = async (req: Request, res: Response) => {
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
 
     return res.status(200).json(errorHandling("See you next time!", null));
 };
 
-export { registerUser, loginUser, logoutUser };
+export { registerUser, logInUser, logOutUser };
