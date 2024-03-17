@@ -1,6 +1,6 @@
 import { QueryResult } from "pg";
 import { Request, Response } from "express";
-import { errorHandling } from "./errorHandling";
+import { errorHandling } from "../utils/errorHandling";
 import pool from "../config/database";
 
 const createPlayerBuy = async (req: Request, res: Response) => {

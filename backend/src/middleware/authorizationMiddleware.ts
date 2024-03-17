@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { errorHandling } from '../controller/errorHandling';
+import { errorHandling } from '../utils/errorHandling';
 
 const authorizationMiddleware = (roles: string[]) => (req: Request, res: Response, next: NextFunction) => {
     if (req.role && !roles.includes(req.role)) {

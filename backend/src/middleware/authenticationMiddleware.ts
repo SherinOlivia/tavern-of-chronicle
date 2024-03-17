@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
 import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 import JWT_TOKEN from "../config/jwt";
-import { errorHandling } from "../controller/errorHandling";
+import { errorHandling } from "../utils/errorHandling";
 
 const authenticationMiddleware = (req: any, res: Response, next: NextFunction) => {
     const authentication = req.cookies.access_token;

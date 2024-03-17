@@ -1,7 +1,7 @@
 import { Pool, QueryResult } from 'pg';
 import bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
-import { errorHandling } from '../controller/errorHandling';
+import { errorHandling } from '../utils/errorHandling';
 import pool from '../config/database';
 
 const registerGameMaster = async (req: Request, res: Response) => {

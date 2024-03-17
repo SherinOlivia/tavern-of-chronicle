@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { QueryResult } from "pg";
-import { errorHandling } from "../controller/errorHandling";
+import { errorHandling } from "../utils/errorHandling";
 import pool from "../config/database";
 
 const viewUserProfile = async (req: Request, res: Response) => {
